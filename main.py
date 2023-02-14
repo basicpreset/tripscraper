@@ -10,11 +10,13 @@
 from bs4 import BeautifulSoup
 import urllib.request as request
 import city_parser as parser
+import urllib
+import requests
 
 
 def main(base_url):
-    html_file = request.urlopen(base_url)
-    soup = BeautifulSoup(html_file, 'html.parser')
+    page = requests.get(base_url, headers={'User-Agent': "Mozilla/5.0"}).text
+    soup = BeautifulSoup(page, 'html.parser')
 
     cities = []
     pageCounter = 1
@@ -27,10 +29,9 @@ def main(base_url):
                 cities.append(city_url)
                 print(city_url)
 
-    for i in cities:
-        parser.collectCity(i)
-
+        for i in cities:
+            parser.collectCity(i)
 
 
 if __name__ == "__main__":
-    main('https://www.tripadvisor.co.hu/Restaurants-g274881-Hungary.html#LOCATION_LIST')
+    main('https://www.tripadvisor.com/Restaurants-g274881-Hungary.html')

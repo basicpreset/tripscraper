@@ -1,11 +1,12 @@
 from bs4 import BeautifulSoup
 import urllib.request as request
+import requests;
 
 
 def collectCity(city_url_extension):
     website_base_url = 'https://www.tripadvisor.co.hu'
     full_url = website_base_url + city_url_extension
-    html_file = request.urlopen(full_url)
+    html_file = requests.get(full_url, headers={'User-Agent': "Mozilla/5.0"}).text
     soup = BeautifulSoup(html_file, 'html.parser')
 
     restaurant_url_format = 'Restaurant_Review'
